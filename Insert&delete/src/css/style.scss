@@ -1,0 +1,167 @@
+$blue : #0075e2;
+$white : #f1f1f1;
+$black  : #444444;
+$red : #e20000;
+$light-yellow : #beffb1;
+
+
+* {
+    ::after, ::before {
+        box-sizing: border-box;
+    }
+}
+/* width */
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: $white;
+    border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: $blue;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    opacity: 0.8;
+}
+body {
+    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: $black;
+    margin: 0;
+    a {
+        text-decoration: none;
+        font-weight: 600;
+        position: relative;
+        // &::after {
+        //     content: "";
+        //     height: 5px;
+        //     width: 0%;
+        //     left: 0;
+        //     bottom: -5px;
+        //     background: chartreuse;
+        //     position: absolute;
+        //     transition: 300ms;
+        // }
+        // &:hover::after{
+        //     width: 100%;
+        // }
+    }
+    .container {
+        width: 90%;
+        margin: auto;
+    }
+
+    .nav-navbar {
+        position: relative;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding-left: 80px;
+        padding-right: 80px;
+        display: flex;
+        justify-content: space-between;
+        h1, h2, h3, h4, h5, h6 {
+            margin: 0;
+        }
+        .nav-item {
+            width: 100%;
+            padding: 20px 0;
+            margin: auto;
+            .logo {
+                color: $blue;
+            }
+            .list-menu {
+                width: 100%;
+                .list-item {
+                    padding-left: unset;
+                    display: flex;
+                    width: 100%;
+                    margin: 0;
+                    .item {
+                        list-style: none;
+                        margin-left: auto;
+                        i {
+                            margin-left: 5px;
+                        }
+                        a.insert {
+                            color: $white;
+                            background: $blue;
+                            border: 2px solid $blue;
+                            border-radius: 50px;
+                            padding: 7px;
+                            &:hover {
+                                opacity: 0.8;
+                                box-shadow: 0 3px 10px rgba(0,0,0,.3);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &.home {
+        table {
+            border-spacing: 0;
+            border-radius: 10px;
+            overflow: hidden;
+            width: 100%;
+            min-width: 1000px;
+            img {
+                width: 30px;
+            }
+        }
+        tr {
+            td {
+                padding-left: 30px;
+                padding-right: 30px;
+                &.aksi {
+                    display: flex;
+                    justify-content: center;
+                    a {
+                        border-radius: 50px;
+                        padding: 7px;
+                        margin: 5px;
+                        &.edit {
+                            color: $blue;
+                            border: 2px solid $blue;
+                            &:hover {
+                                color: $white;
+                                background: $blue;
+                                box-shadow: 0 3px 10px rgba(0,0,0,.3);
+                            }
+                        }
+                        &.hapus {
+                            color: $red;
+                            border: 2px solid $red;
+                            &:hover {
+                                color: $white;
+                                background: $red;
+                                box-shadow: 0 3px 10px rgba(0,0,0,.3);
+                            }
+                        }
+                    }
+                }
+
+            }
+            &:nth-child(odd) {
+                background: $light-yellow;
+            }
+        }
+        .table-scroll {
+            border-radius: 10px;
+            overflow: hidden;
+            padding: 5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,.3);
+            width: 100%;
+            overflow: auto;
+        }
+    }
+}
