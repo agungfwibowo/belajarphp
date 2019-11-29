@@ -2,7 +2,7 @@ $blue : #0075e2;
 $white : #f1f1f1;
 $black  : #444444;
 $red : #e20000;
-$light-yellow : #beffb1;
+$light-green : #beffb1;
 
 
 * {
@@ -152,7 +152,7 @@ body {
 
             }
             &:nth-child(odd) {
-                background: $light-yellow;
+                background: $light-green;
             }
         }
         .table-scroll {
