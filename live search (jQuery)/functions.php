@@ -2,6 +2,14 @@
   //koneksi database
   $conn = mysqli_connect("localhost","root","","belajarphp");
 
+  //pagination
+  //konfigurasi
+  $dataPerHalaman = 2;
+  $jumlahData = count(query("SELECT * FROM bukuperpus"));
+  $jumlahHalaman = ceil($jumlahData / $dataPerHalaman);
+  $halamanAktif = ( isset($_GET["halaman"]) ) ? $_GET["halaman"] : 1;
+  $awalData = ( $dataPerHalaman * $halamanAktif ) - $dataPerHalaman;
+  
   //mengambil data table bukuperpus dari database
   // $result = mysqli_query($conn, "SELECT * FROM bukuperpus");
 
@@ -57,17 +65,21 @@
     return mysqli_affected_rows($conn);
 
   }
-
+  
   function query($query) {
     global $conn;
       
-    echo (mysqli_error($conn));
+    echo mysqli_error($conn);
     $result = mysqli_query($conn, $query);
     $row = [];
-    if (!$result) {
+
+    if( !$result ) {
       echo mysqli_error($conn);
+    }
+    elseif ( mysqli_affected_rows($conn) === 0) {
+      return mysqli_affected_rows($conn);
     } else {
-        while ($row = mysqli_fetch_assoc($result)) {
+      while ($row = mysqli_fetch_assoc($result)) {
         $rows[] = $row;
           }
         return $rows;
@@ -91,7 +103,6 @@
 
     }
 
-    
     $query = "INSERT INTO bukuperpus
                 VALUES (0,
                     '$gambar',
@@ -144,14 +155,20 @@
     return mysqli_affected_rows($conn);
   }
 
-  function cari($keyword) {
+  function cari($data) {
+    global $conn;
+    global $dataPerHalaman;
+    global $awalData;
+
+    $keyword = mysqli_real_escape_string($conn, $data);
+
     $query = "SELECT * FROM bukuperpus
                 WHERE
                 judul LIKE '%$keyword%' OR
                 pengarang LIKE '%$keyword%' OR
                 penerbit LIKE '%$keyword%' OR
                 jumlah LIKE '%$keyword%'
-              ";
+                LIMIT $awalData, $dataPerHalaman";
     
     return query($query);
   }

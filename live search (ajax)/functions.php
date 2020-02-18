@@ -65,18 +65,21 @@
     return mysqli_affected_rows($conn);
 
   }
-
-
+  
   function query($query) {
     global $conn;
       
-    echo (mysqli_error($conn));
+    echo mysqli_error($conn);
     $result = mysqli_query($conn, $query);
     $row = [];
-    if (!$result) {
+
+    if( !$result ) {
       echo mysqli_error($conn);
+    }
+    elseif ( mysqli_affected_rows($conn) === 0) {
+      return mysqli_affected_rows($conn);
     } else {
-        while ($row = mysqli_fetch_assoc($result)) {
+      while ($row = mysqli_fetch_assoc($result)) {
         $rows[] = $row;
           }
         return $rows;
@@ -100,7 +103,6 @@
 
     }
 
-    
     $query = "INSERT INTO bukuperpus
                 VALUES (0,
                     '$gambar',
@@ -153,13 +155,12 @@
     return mysqli_affected_rows($conn);
   }
 
-  function cari($keyword) {
-
+  function cari($data) {
+    global $conn;
     global $dataPerHalaman;
-    global $jumlahData;
-    global $jumlahHalaman;
-    global $halamanAktif;
     global $awalData;
+
+    $keyword = mysqli_real_escape_string($conn, $data);
 
     $query = "SELECT * FROM bukuperpus
                 WHERE

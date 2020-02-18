@@ -51,7 +51,7 @@
         <ul class="list-item">
           <!-- <li class="item">Tabel</li> -->
           <li class="item-menu">
-            <a class="logout" href="logout.php">Logout</a>
+            <a class="logout" href="logout.php">Logout<i class="fas fa-sign-out-alt" style="display:inline-block; margin-left:5px"></i></a>
           </li>
         </ul>
       </div>

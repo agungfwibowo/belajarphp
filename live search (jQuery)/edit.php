@@ -69,7 +69,7 @@
         <ul class="list-item">
           <!-- <li class="item">Tabel</li> -->
           <li class="item-menu">
-            <a class="logout" href="logout.php">Logout</a>
+            <a class="logout" href="logout.php">Logout<i class="fas fa-sign-out-alt" style="display:inline-block; margin-left:5px"></i></a>
           </li>
         </ul>
       </div>
@@ -90,7 +90,7 @@
         </div>
         <div class="button">
           <a class="back" href="/"><i class="fas fa-angle-left"></i></a>
-          <button type="submit" name="submit">TAMBAH<i class="fas fa-angle-right d-none lg-block"></i></button>
+          <button type="submit" name="submit">SELESAI<i class="fas fa-angle-right d-none lg-block"></i></button>
         </div>
       </form>
     </div>
