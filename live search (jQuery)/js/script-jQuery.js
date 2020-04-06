@@ -1,7 +1,6 @@
 $(document).ready(function() {
   //menghilangkan tombol cari
-  $('#cari').hide()
-
+  $('#cari').remove()
   //event bekerja ketika keyword diketik
   $('#keyword').on('keyup', function() {
     //muncul icon loader
@@ -11,12 +10,17 @@ $(document).ready(function() {
     // $('#table').load('ajax/books.php?keyword='+$('#keyword').val())
 
     //ajax menggunakan get
-    $.get('ajax/books.php?keyword=' + $('#keyword').val(), function(data) {
+    if ($('#keyword').val !== '') {
 
-      $('#table').html(data)
-      $('#loader').hide()
-
-    })
+      $.get('ajax/books.php?keyword=' + $('#keyword').val(), function(data) {
+  
+        $('#table').html(data)
+        $('#loader').hide()
+  
+      })
+    } else {
+      $(document).location.href = '/'
+    }
 
   })
 })

@@ -13,7 +13,7 @@
       echo "
         <script>
           alert('Data Berhasil diedit!')
-          document.location.href='/'
+          window.history.go(-2)
         </script>
       ";
     } else if( edit( $_POST ) == 0 ) {
@@ -21,7 +21,7 @@
         <script>
           const ok = confirm('Data belum dirubah, Yakin Lanjut?');
             if(ok) {
-              document.location.href='/'
+              window.history.go(-2)
             }
         </script>
       ";
@@ -29,7 +29,7 @@
       echo "
         <script>
           alert('Data Gagal diedit!')
-            document.location.href='/'
+          window.history.go(-2)
         </script>
       ";
     }
@@ -89,7 +89,7 @@
           <input type="text" name="jumlah" value="<?= $book["jumlah"];?>" required>
         </div>
         <div class="button">
-          <a class="back" href="/"><i class="fas fa-angle-left"></i></a>
+          <a class="back" href="javascript:history.back()"><i class="fas fa-angle-left"></i></a>
           <button type="submit" name="submit">SELESAI<i class="fas fa-angle-right d-none lg-block"></i></button>
         </div>
       </form>

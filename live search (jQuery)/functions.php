@@ -7,6 +7,7 @@
   $dataPerHalaman = 2;
   $jumlahData = count(query("SELECT * FROM bukuperpus"));
   $jumlahHalaman = ceil($jumlahData / $dataPerHalaman);
+  $keyword = ( isset($_GET["keyword"]) ) ? $_GET["keyword"] : '';
   $halamanAktif = ( isset($_GET["halaman"]) ) ? $_GET["halaman"] : 1;
   $awalData = ( $dataPerHalaman * $halamanAktif ) - $dataPerHalaman;
   

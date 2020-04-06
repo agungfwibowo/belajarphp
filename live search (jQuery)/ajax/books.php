@@ -1,30 +1,27 @@
 <?php
   require "../functions.php";
-
-  $keyword = $_GET["keyword"];
-
-  $books = query("SELECT * FROM bukuperpus LIMIT $awalData, $dataPerHalaman");
-
-    if ( $_GET["keyword"] !== '' ) {
-      $keyword = $_GET["keyword"];
-      $books = cari($_GET["keyword"]);
-      if( $books !== 0 ) {
-        $jumlahData = count(query("SELECT * FROM bukuperpus
+  
+  if ( isset($keyword) ) {
+    $data = $keyword;
+    $books = cari($data);
+    if( $books !== 0 ) {
+      $jumlahData = count(query("SELECT * FROM bukuperpus
                   WHERE
-                  judul LIKE '%$keyword%' OR
-                  pengarang LIKE '%$keyword%' OR
-                  penerbit LIKE '%$keyword%' OR
-                  jumlah LIKE '%$keyword%'"));
-        $jumlahHalaman = ceil($jumlahData / $dataPerHalaman);
-      } else {
+                  judul LIKE '%$data%' OR
+                  pengarang LIKE '%$data%' OR
+                  penerbit LIKE '%$data%' OR
+                  jumlah LIKE '%$data%'"));
+      $jumlahHalaman = ceil($jumlahData / $dataPerHalaman);
+      // var_dump($books); die;
+    } else {
+        $jumlahData = 0;
         $jumlahHalaman = 1;
-      }
     }
-
+  }
+    
   $no = $awalData+1;
 
 ?>
-
 
 <div class="table-scroll">
   <table cellpadding="10">
@@ -57,10 +54,19 @@
     <?php endif;?>
   </table>
 </div>
-<div class="pagination">
-  <a href="?halaman=<?= $halamanAktif-1?>" class="<?=$halamanAktif == 1 ? 'disabled' : '' ?>"><i class="fas fa-angle-left"></i></a>
-  <?php for($i=1;$i <= $jumlahHalaman; $i++) : ?>
-    <a href="?halaman=<?= $i ?>" class="<?=$i == $halamanAktif ? 'aktif' : '' ?>"><?= $i ?></a>
-  <?php endfor;?>
-  <a href="?halaman=<?= $halamanAktif+1?>" class="<?=$halamanAktif == $jumlahHalaman ? 'disabled' : '' ?>"><i class="fas fa-angle-right"></i></a>
+<div class="row space-between">
+  <div class="col auto">
+    <?php if( isset($data) &&  $data !== '') :?>
+      <div class="total-data"><h4><strong><i>Total Data = <?=$jumlahData?></i></strong></h4></div>
+    <?php endif;?>
+  </div>
+  <div class="col auto">
+    <div class="pagination">
+      <a href="?keyword=<?=$keyword?>&halaman=<?= $halamanAktif-1?>" class="<?=$halamanAktif == 1 ? 'disabled' : '' ?>"><i class="fas fa-angle-left"></i></a>
+      <?php for($i=1;$i <= $jumlahHalaman; $i++) : ?>
+        <a href="?keyword=<?=$keyword?>&halaman=<?= $i ?>" class="<?=$i == $halamanAktif ? 'aktif' : '' ?>"><?= $i ?></a>
+      <?php endfor;?>
+      <a href="?keyword=<?=$keyword?>&halaman=<?= $halamanAktif+1?>" class="<?=$halamanAktif == $jumlahHalaman ? 'disabled' : '' ?>"><i class="fas fa-angle-right"></i></a>
+    </div>
+  </div>
 </div>

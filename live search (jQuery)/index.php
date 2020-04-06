@@ -8,28 +8,30 @@
 
   require "functions.php";
 
-  $books = query("SELECT * FROM bukuperpus LIMIT $awalData, $dataPerHalaman");
-
-  if ( isset($_POST["cari"]) ) {
-    if ( $_POST["keyword"] !== '' ) {
-      $keyword = $_POST["keyword"];
-      $books = cari($_POST["keyword"]);
+  // var_dump(isset($_GET['keyword'])); die;
+  
+  if ( isset($keyword) ) {
+    if ( $keyword !== '' ) {
+      $data = $keyword;
+      $books = cari($keyword);
       if( $books !== 0 ) {
         $jumlahData = count(query("SELECT * FROM bukuperpus
                   WHERE
-                  judul LIKE '%$keyword%' OR
-                  pengarang LIKE '%$keyword%' OR
-                  penerbit LIKE '%$keyword%' OR
-                  jumlah LIKE '%$keyword%'"));
+                  judul LIKE '%$data%' OR
+                  pengarang LIKE '%$data%' OR
+                  penerbit LIKE '%$data%' OR
+                  jumlah LIKE '%$data%'"));
         $jumlahHalaman = ceil($jumlahData / $dataPerHalaman);
       } else {
+        $books = query("SELECT * FROM bukuperpus LIMIT $awalData, $dataPerHalaman");
         $jumlahHalaman = 1;
       }
     } else {
-      header("Location: /");
+      $books = query("SELECT * FROM bukuperpus LIMIT $awalData, $dataPerHalaman");
+      header('Location : index.php');
     }
   }
-
+  
   $no = $awalData+1;
 ?>
 <!DOCTYPE html>
@@ -65,7 +67,7 @@
     <div class="lg-block">
       <ul class="list-item">
         <li class="item-menu">
-          <form action="" method="post" class="search">
+          <form action="" method="get" class="search">
             <input type="text" id="keyword" name="keyword" placeholder="Masukan Kata Pencarian..." autocomplete="off">
             <button type="submit" id="cari" name="cari">Cari</button>
             <div class="loader" id="loader"></div>
@@ -109,12 +111,21 @@
           <?php endif;?>
         </table>
       </div>
-      <div class="pagination">
-        <a href="?halaman=<?= $halamanAktif-1?>" class="<?=$halamanAktif == 1 ? 'disabled' : '' ?>"><i class="fas fa-angle-left"></i></a>
-        <?php for($i=1;$i <= $jumlahHalaman; $i++) : ?>
-          <a href="?halaman=<?= $i ?>" class="<?=$i == $halamanAktif ? 'aktif' : '' ?>"><?= $i ?></a>
-        <?php endfor;?>
-        <a href="?halaman=<?= $halamanAktif+1?>" class="<?=$halamanAktif == $jumlahHalaman ? 'disabled' : '' ?>"><i class="fas fa-angle-right"></i></a>
+      <div class="row space-between">
+        <div class="col auto">
+          <?php if( isset($data) &&  $data !== '') :?>
+            <div class="total-data"><h4><strong><i>Total Data = <?=$jumlahData?></i></strong></h4></div>
+          <?php endif;?>
+        </div>
+        <div class="col auto">
+          <div class="pagination">
+            <a href="?keyword=<?=$keyword?>&halaman=<?= $halamanAktif-1?>" class="<?=$halamanAktif == 1 ? 'disabled' : '' ?>"><i class="fas fa-angle-left"></i></a>
+            <?php for($i=1;$i <= $jumlahHalaman; $i++) : ?>
+              <a href="?keyword=<?=$keyword?>&halaman=<?= $i ?>" class="<?=$i == $halamanAktif ? 'aktif' : '' ?>"><?= $i ?></a>
+            <?php endfor;?>
+            <a href="?keyword=<?=$keyword?>&halaman=<?= $halamanAktif+1?>" class="<?=$halamanAktif == $jumlahHalaman ? 'disabled' : '' ?>"><i class="fas fa-angle-right"></i></a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
